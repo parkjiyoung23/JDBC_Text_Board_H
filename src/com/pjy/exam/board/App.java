@@ -181,7 +181,32 @@ public class App {
 
       System.out.println("게시물이 수정되었습니다.");
 
-    } else if (cmd.equals("exit")) {
+    }
+    else if (rq.getUrlPath().equals("/usr/member/join")) {
+      System.out.println("== 회원 가입 ==");
+      System.out.printf("로그인 아이디 : ");
+      String loginId = sc.nextLine();
+      System.out.printf("로그인 비번 : ");
+      String loginPw = sc.nextLine();
+      System.out.printf("이름 : ");
+      String name = sc.nextLine();
+
+      SecSql sql = new SecSql();
+      sql.append("INSERT INTO `member`");
+      sql.append("SET regDate = NOW()");
+      sql.append(", updateDate = NOW()");
+      sql.append(", loginId = ?", loginId);
+      sql.append(", loginPw = ?", loginPw);
+      sql.append(", `name`=  ?", name);
+
+
+      int id = DBUtil.insert(conn,sql);
+
+      System.out.printf("%d번 회원이 생성되었습니다\n",id);
+
+    }
+
+    else if (cmd.equals("exit")) {
       System.out.println("== 시스템 종료 ==");
       System.exit(0);
     }
